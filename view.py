@@ -7,33 +7,35 @@ import os
 from project.forms import *
 from werkzeug.security import *
 from flask_mail import *
+from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 import random
 import datetime
 from authlib.integrations.flask_client import OAuth
 
+load_dotenv()
 app = Flask(__name__)
 ##################################################
-app.config.update(dict(
+app.config.update(dict( 
     DEBUG = True,
-    MAIL_SERVER = 'smtp.gmail.com',
+    MAIL_SERVER = os.getenv('MAIL_SERVER'),
     MAIL_PORT = 587,
     MAIL_USE_TLS = True,
     MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'krupesh.patel@yudiz.com',
-    MAIL_PASSWORD = '',
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME'),
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD'),
 ))
 ###################################################
 
 mail = Mail(app)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SECRET_KEY'] = "15654654546sklfjdhjak"
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///"+os.path.join(basedir,'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
-UPLOAD_FOLDER = '/home/mehul/Desktop/To-Do-Application/my_env/static/images'
-UPLOAD_FILE = '/home/mehul/Desktop/To-Do-Application/my_env/static/file'
+UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
+UPLOAD_FILE = os.getenv('UPLOAD_FILE')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOAD_FILE'] = UPLOAD_FILE
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -46,15 +48,15 @@ Migrate(app,db)
 ############################
 oauth = OAuth(app)
 google = oauth.register(
-    name = "Flask Client",
-    client_id = "789279096310-ca0395qm7h8pinnguigtqrmtc1bnp7ps.apps.googleusercontent.com",
-    client_secret = "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",
-    access_token_url = "https://oauth2.googleapis.com/token",
+    name = os.getenv('NAME'),
+    client_id = os.getenv('CLIENT_ID'),
+    client_secret = os.getenv('CLIENT_TOKEN_URL'),
+    access_token_url = os.getenv('ACCESS_TOKEN_URL'),
     acess_token_params = None,
-    authorize_url = "https://accounts.google.com/o/oauth2/auth",
+    authorize_url = os.getenv('AUTHORIZE_URL'),
     authorize_params = None,
-    api_base_url = "http://127.0.0.1:5000/my_log",
-    client_kwargs={'scope':'openid profile email'},
+    api_base_url = os.getenv('API_BASE_URL'),
+    client_kwargs=os.getenv('CLIENT_KWARGS'),
 )
 
 
