@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron">
+{% if errors %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{errors}}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+{% from "formhelpers.html" import render_field %}
+<form action="{{url_for("register")}}" method="POST">
+  <dl>
+    {{ render_field(form.name) }}
+    {{ render_field(form.email) }}
+    {{ render_field(form.password) }}
+    {{ render_field(form.conf_password) }}
+    {{ render_field(form.phone) }}
+  </dl>
+<input value="submit" type="submit" onclick="submitForm()">
+</form>
+</div>
+{% endblock %}

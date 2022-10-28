@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron">
+<form action="{{url_for("login")}}" method="POST">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+      {{message}}
+    </div>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<body>
+ <p align="center">
+  <a href="google/">
+  <img id="google"
+   src="https://img.shields.io/badge/Google-Connect-brightgreen?style=for-the-badge&labelColor=black&logo=google"
+   alt="Google"> <br>
+  </a>
+</body>
+
+{% if errors %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{errors}}</strong>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+{{form.hidden_tag()}}
+{{form.email.label}}{{form.email()}}
+{{form.password.label}}{{form.password()}}
+<input value="submit" type="submit" onclick="submitForm()">
+<a href="{{url_for("forgot_password")}}">Forgot Password</a>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+.DS_Store
+.env
+*.pyc
+*.pyo
+dist/
+build/
+*.egg
+*.egg-info/
+.cache/
+.idea/
+docs/_build/
+.vscode
+db.sqlite3
+__pycache__/
+static
